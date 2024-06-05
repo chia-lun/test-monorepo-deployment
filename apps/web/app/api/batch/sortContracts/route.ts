@@ -38,6 +38,7 @@ export async function GET(request: Request) {
   //   ],
   // };
 
-  console.log("arrive here")
+  alert("arrive here");
+  console.log("arrive here");
   return Response.json({ message: 'connected to api endpoint' })
 }
