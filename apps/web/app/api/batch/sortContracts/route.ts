@@ -1,51 +1,33 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { type NextRequest } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
-console.log("access");
-// POST handler
-// export async function POST(request: NextRequest) {
-//   const body = {
-//     contractBatch: [
-//       "test-contract-1",
-//       "test-contract-2",
-//       "test-contract-3",
-//       "test-contract-4",
-//       "test-contract-5",
-//     ],
-//   };
+// Initialize the client with your Supabase project URL and API key
+const supabase = createClient(
+  "https://gkdwjjudoifxmgtonxlq.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdrZHdqanVkb2lmeG1ndG9ueGxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTcwNDY1NzksImV4cCI6MjAzMjYyMjU3OX0.7K_aJvyU80D1gwPZE6VYlGVYmG3P6wpssC90ahMTtpo",
+  { db: { schema: "public" } }
+);
 
-//   // Make the fetch call
-//   const res = await fetch(`sortContracts`, {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(body),
-//   });
+async function postData(dataToPost: any) {
+  const { data, error } = await supabase.from("test_batch").insert(dataToPost);
 
-//   const data = await res.json();
-//   console.log(data, "Response Data");
-//   return Response.json(data);
-// }
+  if (error) {
+    console.error("Error posting data:", error);
+    return;
+  }
+
+  console.log("Data posted successfully:", data);
+}
 
 export async function GET(request: Request) {
-  const body = {
-    contractBatch: [
-      "test-contract-1",
-      "test-contract-2",
-      "test-contract-3",
-      "test-contract-4",
-      "test-contract-5",
-    ],
-  };
+  const body = [
+    { contract: Math.floor(100000000 + Math.random() * 900000000).toString },
+    { contract: "test-contract-2" },
+  ];
 
-  const res = await fetch(`https://webhook.site/141f17ba-7ca7-4733-b3f7-680f92231b9f`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+  postData(body);
 
-  const data = await res.json();
-
-  console.log("arrive here");
-  return Response.json({ message: "connected to api endpoint", data: data});
+  return Response.json({ message: "connected to api endpoint" });
 }
