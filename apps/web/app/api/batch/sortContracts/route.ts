@@ -21,11 +21,17 @@ async function postData(dataToPost: any) {
   console.log("Data posted successfully:", data);
 }
 
+const body = [
+  { contract: ''+ Math.floor(100000000 + Math.random() * 900000000) },
+  { contract: ''+ Math.floor(100000000 + Math.random() * 900000000) },
+  { contract: ''+ Math.floor(100000000 + Math.random() * 900000000) },
+  { contract: ''+ Math.floor(100000000 + Math.random() * 900000000) },
+  { contract: ''+ Math.floor(100000000 + Math.random() * 900000000) },
+];
+
+console.log(body)
+
 export async function GET(request: Request) {
-  const body = [
-    { contract: Math.floor(100000000 + Math.random() * 900000000).toString },
-    { contract: "test-contract-2" },
-  ];
 
   postData(body);
 
