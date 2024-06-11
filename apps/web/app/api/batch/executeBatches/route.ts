@@ -31,8 +31,8 @@ export async function POST(request: Request) {
 
     // Update the data in Supabase
     const { data: updatedResponse, error } = await supabase
-      .from('your-table-name')
-      .update({ status: 'complete', retry_counter: data.retry_counter + 1 })
+      .from('test_batch')
+      .update(updatedData)
       .match({ id: data.id });
 
     if (error) throw error;
